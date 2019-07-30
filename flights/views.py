@@ -5,11 +5,16 @@ from datetime import datetime
 from .models import Flight, Booking
 from .serializers import FlightSerializer, BookingSerializer, BookingDetailsSerializer, UpdateBookingSerializer, RegisterSerializer, AdminUpdateBookingSerializer
 from .permissions import IsBookingOwner, IsChangable
+from rest_framework.filters import SearchFilter
+from rest_framework.filters import OrderingFilter
 
 
 class FlightsList(ListAPIView):
 	queryset = Flight.objects.all()
 	serializer_class = FlightSerializer
+	filter_backends = [SearchFilter, OrderingFilter,] 
+	search_fields = ['destination', ]
+
 
 
 class BookingsList(ListAPIView):
